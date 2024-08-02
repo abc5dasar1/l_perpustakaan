@@ -12,7 +12,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data = Category::get();
+        return view('category.index', compact('data'));
     }
 
     /**
@@ -20,7 +21,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create');
     }
 
     /**
@@ -28,7 +29,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category;
+        $category->category_name = $request->category_name;
+        $category->save();
+
+        return redirect()->to('category')->with('message', 'Success');
     }
 
     /**
@@ -42,24 +47,35 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(string $id)
     {
-        //
+        $edit = Category::find($id);
+        return view('category.edit', compact('edit'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, string $id)
     {
-        //
+        Category::where('id', $id)->update([
+           'category_name' => $request->category_name
+        ]);
+        // $user = User::find($id);
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = $request->password;
+        // $user->save();
+
+        return redirect()->to('category')->with('message', 'Berhasil');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(string $id)
     {
-        //
+        Category::find($id)->delete();
+        return redirect()->to('category')->with('message', 'Berhasil');
     }
 }
