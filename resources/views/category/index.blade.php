@@ -24,7 +24,7 @@
                         <a class="btn btn-warning btn-sm" href="{{ route('category.edit', $category->id)}}">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <form action="{{ route('category.destroy', $category->id) }}" method="post">
+                        <form class="d-inline" action="{{ route('category.destroy', $category->id) }}" method="post">
                             @csrf
                             @method('delete')
                             <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin Menghapus?')">

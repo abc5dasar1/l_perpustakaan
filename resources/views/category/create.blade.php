@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Tambah Category')
+@section('title', 'Add Category')
 @section('content')
     <form action="{{ route('category.store') }}" method="post">
         @csrf

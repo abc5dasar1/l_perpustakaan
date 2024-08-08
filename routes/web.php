@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BelajarController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
@@ -11,6 +12,7 @@ Route::get('/', function () {
 });
 
 Route::get('login', [\App\Http\Controllers\LoginController::class, 'index']);
+Route::post('login_here', [\App\Http\Controllers\LoginController::class, 'loginHere'])->name('login_here');
 Route::resource('belajar', BelajarController::class);
 Route::get('add', [\App\Http\Controllers\BelajarController::class, 'add']);
 Route::post('store_add', [\App\Http\Controllers\BelajarController::class, 'storeAdd'])->name('store_add');
@@ -23,3 +25,5 @@ Route::post('store_div', [\App\Http\Controllers\BelajarController::class, 'store
 Route::resource('user', UserController::class);
 Route::resource('dashboard', DashboardController::class);
 Route::resource('category', CategoryController::class);
+Route::resource('book', BookController::class);
+

@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Edit Category')
+@section('title', 'Add Category')
 @section('content')
 <form action="{{ route('category.update', $edit->id) }}" method="post">
     @csrf

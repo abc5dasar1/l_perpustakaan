@@ -1,8 +1,8 @@
 @extends('layout.app')
-@section('title', 'Data User')
+@section('title', 'Data Book')
 @section('content')
     <div align="end">
-        <a class="btn btn-sm btn-success mb-2" href="{{ route('user.create') }}">
+        <a class="btn btn-sm btn-success mb-2" href="{{ route('book.create') }}">
             <i class="bi bi-plus"></i>
         </a>
     </div>
@@ -11,22 +11,30 @@
         <thead>
             <tr style="text-align: center;">
                 <th>No</th>
-                <th>Name</th>
-                <th>Email</th>
+                <th>Category</th>
+                <th>Title</th>
+                <th>Stock</th>
+                <th>Publisher</th>
+                <th>Year Published</th>
+                <th>Author</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $key => $user )
+            @foreach ($books as $key => $book )
                 <tr>
                     <td style="text-align: center;">{{$key+1}}</td>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->email}}</td>
+                    <td>{{$book->category->category_name}}</td>
+                    <td>{{$book->title}}</td>
+                    <td>{{$book->stock}}</td>
+                    <td>{{$book->publisher}}</td>
+                    <td>{{$book->year_published}}</td>
+                    <td>{{$book->author}}</td>
                     <td>
-                        <a class="btn btn-warning btn-sm" href="{{ route('user.edit', $user->id)}}">
+                        <a class="btn btn-warning btn-sm" href="{{ route('book.edit', $book->id)}}">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <form class="d-inline" action="{{ route('user.destroy', $user->id) }}" method="post">
+                        <form class="d-inline" action="{{ route('book.destroy', $book->id) }}" method="post">
                             @csrf
                             @method('delete')
                             <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin Menghapus?')">
