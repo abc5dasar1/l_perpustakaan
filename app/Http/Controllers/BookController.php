@@ -46,10 +46,11 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         $edit = Book::find($id);
-        return view('book.edit', compact('edit'));
+        $categories = Category::get();
+        return view('book.edit', compact('edit','categories'));
     }
 
     /**
@@ -57,9 +58,9 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        $book = Book::update($request->all());
+        $data = $request->all();
+        $book->update($data);
         return redirect()->to('book')->with('message', 'Success');
-
     }
 
     /**

@@ -8,7 +8,7 @@
             <input class="form-control" type="text" name="category_name" id="">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-success btn-sm mr-2">
+            <button type="submit" class="btn btn-primary btn-sm mr-2">
                 Save
             </button>
             <a href="{{ url()->previous() }}">Back</a>

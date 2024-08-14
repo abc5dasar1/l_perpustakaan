@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BelajarController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
@@ -26,4 +27,5 @@ Route::resource('user', UserController::class);
 Route::resource('dashboard', DashboardController::class);
 Route::resource('category', CategoryController::class);
 Route::resource('book', BookController::class);
-
+Route::resource('borrowing', BorrowingController::class);
+Route::get('getBook/{category_id}', [\App\Http\Controllers\AjaxController::class, 'getBookData']);
