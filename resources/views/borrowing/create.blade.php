@@ -10,7 +10,7 @@
                         <label for="">Transaction Code</label>
                     </div>
                     <div class="col col-sm-6">
-                        <input type="text" name="transaction_code" id="" class="form-control" readonly>
+                        <input type="text" value="{{ $transaction_code }}" name="transaction_code" id="" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -18,8 +18,11 @@
                         <label for="">Name Members</label>
                     </div>
                     <div class="col col-sm-6">
-                        <select name="" id="" class="form-control">
+                        <select name="member_id" id="" class="form-control">
                             <option value="">-- Select Members --</option>
+                            @foreach ($members as $member)
+                                <option value="{{ $member->id }}">{{ $member->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

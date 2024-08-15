@@ -123,10 +123,12 @@
     <script>
         $('#add-row').click(function(){
             let tbody = $("tbody");
-            let no = tbody.find("tr").length + 1, publisher = $('#publisher').val(), title = $("#book_id").find("option:selected").text();
+            let no = tbody.find("tr").length + 1, publisher = $('#publisher').val(),
+            title = $("#book_id").find("option:selected").text(),
+            book_id = $('#book_id').val();
             let newRow = "<tr>";
                 newRow += "<td>"+no+"</td>";
-                newRow += "<td>"+title+"</td>";
+                newRow += "<td>"+title+"<input type='hidden' name='book_id[]' id='book_id' value='"+book_id+"'></td>";
                 newRow += "<td>"+publisher+"</td>";
                 newRow += "<td><button type='button' class='btn btn-danger btn-sm delete-row'><i class='bi bi-trash'></i></button></td>";
                 newRow += "</tr>"
@@ -137,7 +139,8 @@
             })
         });
         $('#category_id').change(function(){
-            let category_id = $(this).val(), option = "";
+            let category_id = $(this).val(),
+            option = "";
             let category_name = $(this).find('option:selected').text();
 
             $.ajax({
@@ -147,11 +150,24 @@
                 success:function(data){
                     option += "<option value=''>-- Select Book --</option>"
                     $.each(data.data, function(index, value){
-                        $('#publisher').val(value.publisher);
+                        // $('#publisher').val(value.publisher);
                         console.log(value)
                         option += "<option value="+value.id+">"+value.title+"</option>"
                     });
                     $('#book_id').html(option)
+                }
+            });
+        });
+        $('#book_id').change(function(){
+            let book_id = $(this).val();
+            // let book_name = $(this).find('option:selected').text();
+
+            $.ajax({
+                type:"get",
+                dataType:"json",
+                url:"/getBooks/" + book_id,
+                success:function(res){
+                    $("#publisher").val(res.data.publisher);
                 }
             });
         });

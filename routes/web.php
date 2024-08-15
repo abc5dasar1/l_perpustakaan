@@ -29,3 +29,4 @@ Route::resource('category', CategoryController::class);
 Route::resource('book', BookController::class);
 Route::resource('borrowing', BorrowingController::class);
 Route::get('getBook/{category_id}', [\App\Http\Controllers\AjaxController::class, 'getBookData']);
+Route::get('getBooks/{book_id}', [\App\Http\Controllers\AjaxController::class, 'getBook']);

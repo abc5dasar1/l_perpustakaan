@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Borrowing;
+use App\Models\BorrowingDetail;
 use App\Models\Category;
+use App\Models\Member;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 class BorrowingController extends Controller
 {
     /**
@@ -13,8 +16,8 @@ class BorrowingController extends Controller
      */
     public function index()
     {
-        $data = Category::get();
-        return view('borrowing.index', compact('data'));
+        $borrow = Borrowing::with('member')->get();
+        return view('borrowing.index', compact('borrow'));
     }
 
     /**
@@ -23,7 +26,12 @@ class BorrowingController extends Controller
     public function create()
     {
         $categories = Category::get();
-        return view('borrowing.create', compact('categories'));
+        $members = Member::get();
+        $unique_code = Borrowing::get()->last();
+        $borrow_id = isset($unique_code->id) ? ($unique_code->id == "" ? 1 : $unique_code->id) : '';
+        $borrow_id++;
+        $transaction_code = 'BRW' . date("dmY") . sprintf("%03s", $borrow_id);
+        return view('borrowing.create', compact('categories', 'members', 'transaction_code'));
     }
 
     /**
@@ -31,10 +39,23 @@ class BorrowingController extends Controller
      */
     public function store(Request $request)
     {
-        $borrowing = new Borrowing;
-        $borrowing->borrowing_name = $request->borrowing_name;
-        $borrowing->save();
+        $borrow = Borrowing::create([
+            'member_id' => $request->member_id,
+            'transaction_code' => $request->transaction_code,
+            'borrowing_date' => $request->borrowing_date,
+            'returning_date' => $request->returning_date,
+            'operator' => (Auth::user()->name ?? 'Fadiyah'),
+        ]);
 
+        if ($borrow) {
+            foreach ($request->book_id as $key => $value) {
+                BorrowingDetail::create([
+                    'book_id' => $value,
+                    'borrowing_id' => $borrow->id,
+                ]);
+            }
+        }
+        Alert::success('Oke', 'Borrow Succeed');
         return redirect()->to('borrowing')->with('message', 'Success');
     }
 

@@ -11,20 +11,28 @@
         <thead>
             <tr style="text-align: center;">
                 <th>No</th>
-                <th>Name</th>
+                <th>Name Member</th>
+                <th>Transaction Code</th>
+                <th>Borrowing Date</th>
+                <th>Returning Date</th>
+                <th>Operator</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $key => $category )
+            @foreach ($borrow as $key => $brw)
                 <tr>
-                    <td style="text-align: center;">{{$key+1}}</td>
-                    <td>{{$category->category_name}}</td>
+                    <td>{{ $key+1 }}</td>
+                    <td>{{ $brw->member->name }}</td>
+                    <td>{{ $brw->transaction_code }}</td>
+                    <td>{{ date('D, d-m-Y', strtotime($brw->borrowing_date)) }}</td>
+                    <td>{{ date('D, d-m-Y', strtotime($brw->returning_date)) }}</td>
+                    <td>{{ $brw->operator }}</td>
                     <td>
-                        <a class="btn btn-warning btn-sm" href="{{ route('borrowing.edit', $category->id)}}">
+                        <a class="btn btn-warning btn-sm d-inline" href="">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <form class="d-inline" action="{{ route('borrowing.destroy', $category->id) }}" method="post">
+                        <form class="d-inline" method="post">
                             @csrf
                             @method('delete')
                             <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin Menghapus?')">
